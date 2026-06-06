@@ -1,0 +1,9 @@
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.zkube</groupId>
+    <artifactId>zkube-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging> <modules>
+        <module>accounts-service</module>
+    </modules>
+</project>
