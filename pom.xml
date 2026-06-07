@@ -5,5 +5,7 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging> <modules>
         <module>accounts-service</module>
+        <module>transactions-service</module> 
     </modules>
+    
 </project>
