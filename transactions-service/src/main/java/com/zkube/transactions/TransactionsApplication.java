@@ -19,6 +19,10 @@ public class TransactionsApplication {
         
         Database.init();
         Javalin app = Javalin.create().start(8082); // Runs on 8082!
+        
+        app.get("/api/transactions/health", ctx -> {
+            ctx.json("{\"status\": \"UP\", \"service\": \"transactions\"}");
+        });
 
         app.post("/api/transfers", ctx -> {
             TransferRequest req = ctx.bodyAsClass(TransferRequest.class);

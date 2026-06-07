@@ -70,7 +70,7 @@ spec:
         - containerPort: 8082
         livenessProbe:
           httpGet:
-            path: /api/accounts/health 
+            path: /api/transactions/health 
             port: 8082
           initialDelaySeconds: 5
 ---
