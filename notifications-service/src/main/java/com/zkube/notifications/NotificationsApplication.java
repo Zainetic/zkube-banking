@@ -8,7 +8,7 @@ import java.util.List;
 
 public class NotificationsApplication {
 
-    private static final JedisPool jedisPool = new JedisPool("localhost", 6379);
+	private static final JedisPool jedisPool = new JedisPool("redis-cache", 6379);
 
     public static void main(String[] args) {
         
@@ -19,7 +19,7 @@ public class NotificationsApplication {
             ctx.json("{\"status\": \"UP\", \"service\": \"notifications\"}");
         });
 
-        System.out.println("🚀 Notifications Service running on port 8083");
+        System.out.println("Notifications Service running on port 8083");
 
         // 2. Start the Asynchronous Background Worker
         startRedisListener();
@@ -27,7 +27,7 @@ public class NotificationsApplication {
 
     private static void startRedisListener() {
         new Thread(() -> {
-            System.out.println("🎧 Listening for events on Redis 'notification_queue'...");
+            System.out.println("Listening for events on Redis 'notification_queue'...");
             
             try (Jedis jedis = jedisPool.getResource()) {
                 while (true) {
@@ -41,7 +41,7 @@ public class NotificationsApplication {
                     }
                 }
             } catch (Exception e) {
-                System.err.println("❌ Redis connection failed: " + e.getMessage());
+                System.err.println("Redis connection failed: " + e.getMessage());
             }
         }).start(); // Starts this loop in a totally separate thread!
     }

@@ -58,7 +58,7 @@ public class AccountsApplication {
             }
         });
 
-        System.out.println("✅ Accounts Service running with DB Connection on port 8081");
+        System.out.println("Accounts Service running with DB Connection on port 8081");
     }
 
     // Java 16+ Record to easily parse incoming JSON requests

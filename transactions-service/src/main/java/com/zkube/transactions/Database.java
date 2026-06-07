@@ -13,9 +13,9 @@ public class Database {
 
     public static void init() {
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:postgresql://localhost:5434/zkube_chaos");
-        config.setUsername("postgres");
-        config.setPassword("password");
+        config.setJdbcUrl("jdbc:postgresql://postgres-db:5432/zkube_chaos");
+        	config.setUsername("postgres");
+        config.setPassword("admin");
         
         // Connection pool settings optimized for microservices
         config.setMaximumPoolSize(10);

@@ -13,7 +13,7 @@ import static org.jooq.impl.DSL.*;
 public class TransactionsApplication {
 
     // Connect to Docker Redis instance
-    private static final JedisPool jedisPool = new JedisPool("localhost", 6379);
+	private static final JedisPool jedisPool = new JedisPool("redis-cache", 6379);
 
     public static void main(String[] args) {
         
@@ -81,7 +81,7 @@ public class TransactionsApplication {
             }
         });
 
-        System.out.println("🚀 Transactions Service running on port 8082");
+        System.out.println("Transactions Service running on port 8082");
     }
 
     record TransferRequest(String fromAccount, String toAccount, BigDecimal amount) {}
