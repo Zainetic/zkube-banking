@@ -22,9 +22,9 @@ public class AccountsApplication {
             ctx.json("{\"status\": \"UP\", \"service\": \"accounts\"}");
         });
 
-        // 3. Endpoint: Create a new bank account
+        // 3. Endpoint: Creating a new bank account
         app.post("/api/accounts", ctx -> {
-            // Parse incoming JSON (e.g., {"ownerName": "Alice", "initialBalance": 1000.00})
+            // Parse incoming JSON
             String ownerName = ctx.bodyAsClass(AccountRequest.class).ownerName();
             BigDecimal initialBalance = ctx.bodyAsClass(AccountRequest.class).initialBalance();
 
@@ -61,6 +61,5 @@ public class AccountsApplication {
         System.out.println("Accounts Service running with DB Connection on port 8081");
     }
 
-    // Java 16+ Record to easily parse incoming JSON requests
     record AccountRequest(String ownerName, BigDecimal initialBalance) {}
 }

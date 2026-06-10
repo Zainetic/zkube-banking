@@ -78,7 +78,7 @@ public class TransactionsApplication {
                     
                     ctx.status(200).json("{\"status\": \"SUCCESS\", \"transferId\": \"" + transferId + "\"}");
                 });
-                // END ACID TRANSACTION (Auto-commits if no errors, auto-rollbacks if exception thrown)
+                // END ACID TRANSACTION 
 
             } catch (Exception e) {
                 ctx.status(400).json("{\"status\": \"FAILED\", \"error\": \"" + e.getMessage() + "\"}");

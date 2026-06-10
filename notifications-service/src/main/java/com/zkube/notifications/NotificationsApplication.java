@@ -12,7 +12,7 @@ public class NotificationsApplication {
 
     public static void main(String[] args) {
         
-        // 1. Boot up a lightweight web server just so Kubernetes can check if it's alive
+        // 1. Booting up a lightweight web server 
         Javalin app = Javalin.create().start(8083);
 
         app.get("/api/notifications/health", ctx -> {
@@ -21,7 +21,7 @@ public class NotificationsApplication {
 
         System.out.println("Notifications Service running on port 8083");
 
-        // 2. Start the Asynchronous Background Worker
+        // 2. Starting the Asynchronous Background Worker
         startRedisListener();
     }
 
@@ -43,6 +43,6 @@ public class NotificationsApplication {
             } catch (Exception e) {
                 System.err.println("Redis connection failed: " + e.getMessage());
             }
-        }).start(); // Starts this loop in a totally separate thread!
+        }).start(); 
     }
 }
