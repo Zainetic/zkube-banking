@@ -22,7 +22,7 @@ public class Database {
         config.setMinimumIdle(2);
         
         dataSource = new HikariDataSource(config);
-        System.out.println("🗄️ Database Connection Pool Initialized.");
+        System.out.println("Database Connection Pool Initialized.");
     }
 
     public static DSLContext getContext() {
