@@ -29,6 +29,7 @@ services:
       - zkube-network
     volumes:
       - postgres-data:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d zkube_chaos"]
       interval: 5s
