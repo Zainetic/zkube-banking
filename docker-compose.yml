@@ -1,4 +1,7 @@
 services:
+  # ---------------------------------------------------------
+  # INFRASTRUCTURE TIER
+  # ---------------------------------------------------------
   redis-cache:
     image: redis:7.2-alpine
     container_name: zkube-redis
@@ -7,6 +10,11 @@ services:
     networks:
       - zkube-network
     command: redis-server --save 60 1 --loglevel warning
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   postgres-db:
     image: postgres:16-alpine
@@ -21,6 +29,12 @@ services:
       - zkube-network
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d zkube_chaos"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   pgadmin:
     image: dpage/pgadmin4
@@ -33,8 +47,48 @@ services:
     networks:
       - zkube-network
     depends_on:
-      - postgres-db
+      postgres-db:
+        condition: service_started
 
+  # ---------------------------------------------------------
+  # APPLICATION TIER
+  # ---------------------------------------------------------
+  accounts-service:
+    image: zkube-accounts:latest
+    container_name: zkube-accounts
+    ports:
+      - "8081:8081"
+    networks:
+      - zkube-network
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+
+  transactions-service:
+    image: zkube-transactions:latest
+    container_name: zkube-transactions
+    ports:
+      - "8082:8082"
+    networks:
+      - zkube-network
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+      redis-cache:
+        condition: service_healthy
+
+  notifications-service:
+    image: zkube-notifications:latest
+    container_name: zkube-notifications
+    networks:
+      - zkube-network
+    depends_on:
+      redis-cache:
+        condition: service_healthy
+
+# ---------------------------------------------------------
+# NETWORKS & VOLUMES
+# ---------------------------------------------------------
 networks:
   zkube-network:
     driver: bridge
