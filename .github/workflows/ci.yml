@@ -1,0 +1,39 @@
+name: ZKube FinTech CI Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: 'maven' 
+
+    - name: Test & Build Accounts Service
+      run: |
+        cd accounts-service
+        mvn clean package
+      env:
+        TESTCONTAINERS_RYUK_DISABLED: "false"
+
+    - name: Test & Build Transactions Service
+      run: |
+        cd transactions-service
+        mvn clean package
+
+    - name: Test & Build Notifications Service
+      run: |
+        cd notifications-service
+        mvn clean package
